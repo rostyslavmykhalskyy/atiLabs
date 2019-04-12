@@ -1,9 +1,31 @@
 <template>
   <main>
-    <table style="width:99%">
+    <div class="answer" v-for="ankiet in ankiety" :key="ankiet.id">
+      <div class="answer__header">
+        <div class="answer__header__user">
+          <p>Użytkownik: {{ ankiet.user_email }}</p>
+          <button class="answer__more">Pokaż odpowiedzi</button>
+        </div>
+        <div class="answer__header__time">
+          <p>Początek: {{ ankiet.startTime }}</p>
+          <p>Koniec: {{ ankiet.endTime }}</p>
+        </div>
+      </div>
+      <transition name="answers">
+        <div v-if="answerShow" class="answer__answers">
+          <p>Odpowiedż 1: {{ ankiet.answer1 }}</p>
+          <p v-for="answer2 in ankiet.answer2" :key="answer2.id">Odpowiedż 2: {{ answer2 }}</p>
+          <p>Odpowiedż 3: {{ ankiet.answer3 }}</p>
+          <p>Odpowiedż 4: {{ ankiet.answer4 }}</p>
+          <p>Odpowiedż 5: {{ ankiet.answer5 }}</p>
+          <p>Odpowiedż 6: {{ ankiet.answer6 }}</p>
+          <p>Odpowiedż 7: {{ ankiet.answer7 }}</p>
+        </div>
+      </transition>
+    </div>
+    <!-- <table style="width:99%">
       <thead>
         <tr>
-          <!-- <th>Ankieta</th> -->
           <th>Odpowiedż 1</th>
           <th>Odpowiedż 2</th>
           <th>Odpowiedż 3</th>
@@ -19,7 +41,6 @@
 
       <tbody>
         <tr v-for="ankiet in ankiety" :key="ankiet.id">
-          <!-- <td>{{ ankiet.ankiet }}</td> -->
           <td>{{ ankiet.answer1 }}</td>
           <td>{{ ankiet.answer2 }}</td>
           <td>{{ ankiet.answer3 }}</td>
@@ -32,7 +53,7 @@
           <td>{{ ankiet.user_email }}</td>
         </tr>
       </tbody>
-    </table>
+    </table>-->
   </main>
 </template>
 
@@ -41,7 +62,8 @@ import { db } from "../firebase";
 export default {
   data() {
     return {
-      ankiety: []
+      ankiety: [],
+      answerShow: false
     };
   },
   created() {
@@ -77,5 +99,22 @@ td {
 }
 thead {
   color: #fff;
+}
+main {
+  height: auto;
+}
+.answer {
+  width: 90%;
+}
+.answer__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.answer__header__time p {
+  text-align: right;
+}
+.answer__answers p {
+  text-align: left;
 }
 </style>

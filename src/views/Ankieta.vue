@@ -131,16 +131,17 @@
         </div>
         <div v-if="state==3" key="state4" class="main__elem">
           <div class="main__elem__movie">
-            <div v-if="preloader" class="header__popup__preloader"></div>
-            <iframe
-              v-on:load="preloader = false"
-              width="560"
-              height="315"
-              src="https://www.youtube-nocookie.com/embed/PyZYS8Vg974"
-              frameborder="0"
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; loop"
-              allowfullscreen
-            ></iframe>
+            <video
+              preload
+              poster="https://firebasestorage.googleapis.com/v0/b/ankiety-35c4d.appspot.com/o/ee8711a76d3373503ceea1f997837751.jpg?alt=media&token=09652034-7206-4b15-9057-27b8f8fa7de5"
+              controls
+              data-plyr-config="{ 'controls' : ['play', 'progress', 'current-time', 'volume', 'fullscreen']}"
+            >
+              <source
+                src="https://firebasestorage.googleapis.com/v0/b/ankiety-35c4d.appspot.com/o/dd19c4c7ce480a06486f1d38555e58c1.mp4?alt=media&token=ef0b0112-27db-4a1a-b753-572ae6539f15"
+                type="video/mp4"
+              >
+            </video>
           </div>
           <p
             class="main__p"
@@ -204,7 +205,8 @@ export default {
       an6: null,
       an7: null,
       startTime: null,
-      endTime: null
+      endTime: null,
+      jest: false
     };
   },
   methods: {
@@ -264,8 +266,7 @@ export default {
           ankiet: "A",
           user_email: fb.auth().currentUser.email,
           user: fb.auth().currentUser.uid
-        });
-        this.saved = true;
+        }).then(this.saved = true);
       }
     }
   },

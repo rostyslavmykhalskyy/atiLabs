@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <link rel="stylesheet" href="https://unpkg.com/vue-plyr/dist/vue-plyr.css">
     <headertop @logined="onLogin"></headertop>
     <transition name="rotateviews" mode="out-in">
       <router-view :loginedUser="user"></router-view>
@@ -38,6 +39,15 @@
   opacity: 0;
 }
 
+.answers-enter-active,
+.answers-leave-active {
+  height: auto;
+}
+.answers-enter,
+.answers-leave-to {
+  height: 0;
+}
+
 .rotate-enter-active,
 .rotate-leave-active {
   transition: all 0.3s ease-in-out;
@@ -70,6 +80,11 @@ button {
   }
   @extend.basic-animation;
 }
+video {
+  width: 100%;
+  height: auto;
+}
+
 //Header Start
 header {
   width: 90%;
@@ -221,7 +236,65 @@ main p {
 .main__p {
   text-align: center;
 }
-////Mein Ankieta Start
+////Main Presentation Start
+.main__presentation {
+  padding: 3%;
+  margin-bottom: 1vh;
+}
+.main__presentation .main__p {
+  text-align: left;
+}
+.main__presentation__elem {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.main__presentation__elem__buttons {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+}
+.main__presentation__elem__button {
+  font-size: 1.1rem !important;
+  margin-bottom: 1vh;
+  &:hover {
+    transform: scale(0.97);
+  }
+}
+.main__presentation__elem__button__clicked {
+  font-size: 1.1rem !important;
+  border: 5px solid $accent-color;
+  transform: scale(0.94);
+  &:hover {
+    transform: scale(0.94);
+  }
+}
+
+.main__presentation__elem__button:last-of-type {
+  margin-bottom: 0;
+}
+.main__presentation__elem__media {
+  width: 40%;
+  min-height: 40.41953703703704vh;
+  display: flex;
+  align-items: center;
+}
+.main__presentation__elem__media__movie {
+  width: 100%;
+}
+.main__presentation__elem__media__picture {
+  max-width: 100%;
+  margin: 0 auto;
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    height: 40.41953703703704vh;
+    margin: 0 auto;
+  }
+}
+
+////Main Presentation End
+////Main Ankieta Start
 .main__ankieta {
   width: 100%;
 }
@@ -428,13 +501,7 @@ main p {
 }
 
 .main__elem__movie {
-  // width: 100%;
-  // height: 29.16666666666667vh;
-  // text-align: center;
-  // position: relative;
-  width: 60%;
-  min-height: 21.166667vh;
-  height: 37vh;
+  width: 65%;
   text-align: center;
   position: relative;
   margin: 0 auto;
@@ -484,6 +551,17 @@ iframe {
   .main__h {
     font-size: 1.8rem;
   }
+  .main__presentation__elem {
+    flex-direction: column;
+  }
+  .main__presentation__elem__buttons {
+    width: 80%;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+  }
+  .main__presentation__elem__media {
+    width: 80%;
+  }
   .main__elem__movie {
     width: auto;
     height: auto;
@@ -509,6 +587,15 @@ iframe {
   .button__form__submit {
     width: 80%;
     border-radius: 25px;
+  }
+  .testowanie {
+    flex-direction: column;
+  }
+  .testowanie button {
+    margin-bottom: 2vh;
+  }
+  .testowanie button:last-of-type {
+    margin-bottom: 0vh;
   }
   footer {
     height: auto;
@@ -541,4 +628,5 @@ export default {
   }
 };
 </script>
+
 
