@@ -36,16 +36,16 @@ export default new Router({
         import(/* webpackChunkName: "answers" */ './views/Answers.vue')
     },
     {
-      path: '/surveyPunkty',
-      name: 'surveyPunkty',
+      path: '/surveyPoints',
+      name: 'surveyPoints',
       component: () =>
-        import(/* webpackChunkName: "surveyPunkty" */ './views/SurveyPunkty.vue')
+        import(/* webpackChunkName: "surveyPoints" */ './views/SurveyPoints.vue')
     },
     {
-      path: '/surveyPunkty2',
-      name: 'surveyPunkty2',
+      path: '/surveyPoints2',
+      name: 'surveyPoints2',
       component: () =>
-        import(/* webpackChunkName: "surveyPunkty2" */ './views/SurveyPunkty2.vue')
+        import(/* webpackChunkName: "surveyPoints2" */ './views/SurveyPoints2.vue')
     },
     {
       path: '/Cwiczenia',

@@ -1,10 +1,10 @@
 <template>
   <main>
-    <router-link to="/surveyPunkty">
+    <router-link to="/surveyPoints">
       <button>PRZEJDŹ ODDZIELNIE DO ANKIETY</button>
     </router-link>
     <br>
-    <router-link to="/surveyPunkty2">
+    <router-link to="/surveyPoints2">
       <button>PRZEJDŹ ODDZIELNIE DO ANKIETY2</button>
     </router-link>
     <br>
