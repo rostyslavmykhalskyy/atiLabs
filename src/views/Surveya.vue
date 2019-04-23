@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="main__ankieta">
+    <div class="main__survey">
       <transition name="fade" mode="out-in">
         <div v-if="state==0" key="state1" class="main__elem">
           <p
@@ -205,8 +205,7 @@ export default {
       an6: null,
       an7: null,
       startTime: null,
-      endTime: null,
-      jest: false
+      endTime: null
     };
   },
   methods: {
@@ -253,20 +252,22 @@ export default {
     },
     saveData() {
       if (fb.auth().currentUser.uid) {
-        db.collection("ankiet").add({
-          answer1: this.an1,
-          answer2: this.an2,
-          answer3: this.an3,
-          answer4: this.an4,
-          answer5: this.an5,
-          answer6: this.an6,
-          answer7: this.an7,
-          startTime: this.startTime,
-          endTime: this.endTime,
-          ankiet: "A",
-          user_email: fb.auth().currentUser.email,
-          user: fb.auth().currentUser.uid
-        }).then(this.saved = true);
+        db.collection("survey")
+          .add({
+            answer1: this.an1,
+            answer2: this.an2,
+            answer3: this.an3,
+            answer4: this.an4,
+            answer5: this.an5,
+            answer6: this.an6,
+            answer7: this.an7,
+            startTime: this.startTime,
+            endTime: this.endTime,
+            survey: "A",
+            user_email: fb.auth().currentUser.email,
+            user: fb.auth().currentUser.uid
+          })
+          .then((this.saved = true));
       }
     }
   },

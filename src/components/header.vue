@@ -1,6 +1,17 @@
 <template>
   <header>
-    <img @click="answers" class="header__img" src="img/img1.jpg">
+    <div class="header__imgs">
+      <div class="header__img">
+        <img @click="answers" src="img/img1.jpg">
+      </div>
+      <div class="header__img">
+        <a href="https://www.ncbr.gov.pl">
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/ankiety-35c4d.appspot.com/o/logoNCBR.png?alt=media&token=ea1de03c-9e43-47d8-9960-51c1d8eae94e"
+          >
+        </a>
+      </div>
+    </div>
     <div class="header__form">
       <transition name="rotate" mode="out-in">
         <form v-if="!logined" key="signin" @submit="signin">

@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="main__ankieta">
+    <div class="main__survey">
       <transition name="fade" mode="out-in">
         <div v-if="state==0" class="main__elem" key="state0">
           <p class="main__elem__p">Ankiety uwzględniający najpopularniejsze typy pytań.</p>
@@ -145,9 +145,6 @@ export default {
       an7: null,
       startTime: null,
       endTime: null
-      // ankieta1: {},
-      // ankieta2: {},
-      // ankieta3: {}
     };
   },
   methods: {
@@ -186,7 +183,7 @@ export default {
     },
     saveData() {
       if (fb.auth().currentUser.uid) {
-        db.collection("ankiet").add({
+        db.collection("survey").add({
           answer1: this.an1,
           answer2: this.an2,
           answer3: this.an3,
@@ -196,7 +193,7 @@ export default {
           answer7: this.an7,
           startTime: this.startTime,
           endTime: this.endTime,
-          ankiet: "B",
+          survey: "B",
           user_email: this.loginedUser,
           user: fb.auth().currentUser.uid
         });

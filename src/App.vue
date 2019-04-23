@@ -84,7 +84,6 @@ video {
   width: 100%;
   height: auto;
 }
-
 //Header Start
 header {
   width: 90%;
@@ -95,9 +94,19 @@ header {
   align-items: center;
   justify-content: space-between;
 }
-
+.header__imgs {
+  width: 20%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+}
 .header__img {
-  width: 15%;
+  width: 45%;
+  img {
+    display: block;
+    height: auto;
+    width: 100%;
+  }
 }
 
 .header__form {
@@ -140,10 +149,10 @@ header {
 
 .header__popup {
   width: 100%;
-  height: 84vh;
+  height: 80vh;
   top: 8vh;
   right: 0;
-  position: absolute;
+  position: fixed;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -185,9 +194,20 @@ header {
 //Footer Start
 footer {
   width: 70%;
-  height: 6vh;
+  height: 10vh;
   margin: 0 auto;
   padding: 1vh 0 1vh 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: center;
+}
+.footer__p {
+  text-indent: 1rem;
+  font: 0.6rem/1.2 "PoppinsRegular", Arial, sans-serif;
+}
+.footer__imgs {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-content: center;
@@ -205,7 +225,7 @@ footer {
 //Foter End
 //Main Start
 main {
-  height: 84vh;
+  height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -294,8 +314,8 @@ main p {
 }
 
 ////Main Presentation End
-////Main Ankieta Start
-.main__ankieta {
+////Main Survey Start
+.main__survey {
   width: 100%;
 }
 .main__elem {
@@ -518,7 +538,7 @@ iframe {
   right: 0;
   margin: auto;
 }
-////Mein Ankieta End
+////Mein Survey End
 //Mein End
 @media (max-width: 2560px) {
 }
@@ -530,6 +550,15 @@ iframe {
 }
 
 @media (max-width: 768px) {
+  button {
+    &:hover,
+    &:active {
+      transform: scale(1);
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+    }
+  }
   header {
     height: auto;
     flex-direction: column;
@@ -569,8 +598,11 @@ iframe {
   .main__elem__circle_buttons {
     width: 100%;
   }
+  .header__imgs {
+    width: 45%;
+  }
   .header__img {
-    width: 30%;
+    width: 45%;
     margin-top: 5vh;
     margin-bottom: 5vh;
   }
@@ -599,8 +631,14 @@ iframe {
   }
   footer {
     height: auto;
+    align-content: center;
+    padding: 1.3vh 0 1.3vh 0;
+  }
+  .footer__imgs {
+    height: auto;
     flex-wrap: wrap;
     justify-content: space-between;
+    align-items: center;
   }
   .footer__img {
     width: 40%;

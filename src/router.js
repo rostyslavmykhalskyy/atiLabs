@@ -18,22 +18,40 @@ export default new Router({
         import(/* webpackChunkName: "logined" */ './views/Logined.vue')
     },
     {
-      path: '/ankieta',
-      name: 'ankietaa',
+      path: '/surveya',
+      name: 'surveya',
       component: () =>
-        import(/* webpackChunkName: "ankieta" */ './views/Ankieta.vue')
+        import(/* webpackChunkName: "survey" */ './views/Surveya.vue')
     },
     {
-      path: '/ankietb',
-      name: 'ankietb',
+      path: '/surveyb',
+      name: 'surveyb',
       component: () =>
-        import(/* webpackChunkName: "ankietb" */ './views/Ankietb.vue')
+        import(/* webpackChunkName: "surveyb" */ './views/Surveyb.vue')
     },
     {
       path: '/answers',
       name: 'answers',
       component: () =>
-        import(/* webpackChunkName: "ankietb" */ './views/Answers.vue')
+        import(/* webpackChunkName: "answers" */ './views/Answers.vue')
+    },
+    {
+      path: '/surveyPunkty',
+      name: 'surveyPunkty',
+      component: () =>
+        import(/* webpackChunkName: "surveyPunkty" */ './views/SurveyPunkty.vue')
+    },
+    {
+      path: '/surveyPunkty2',
+      name: 'surveyPunkty2',
+      component: () =>
+        import(/* webpackChunkName: "surveyPunkty2" */ './views/SurveyPunkty2.vue')
+    },
+    {
+      path: '/Cwiczenia',
+      name: 'Cwiczenia',
+      component: () =>
+        import(/* webpackChunkName: "Cwiczenia" */ './views/Cwiczenia.vue')
     }
   ]
 })

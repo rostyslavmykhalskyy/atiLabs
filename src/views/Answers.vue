@@ -1,25 +1,25 @@
 <template>
   <main>
-    <div class="answer" v-for="ankiet in ankiety" :key="ankiet.id">
+    <div class="answer" v-for="survey in surveys" :key="survey.id">
       <div class="answer__header">
         <div class="answer__header__user">
-          <p>Użytkownik: {{ ankiet.user_email }}</p>
-          <button class="answer__more">Pokaż odpowiedzi</button>
+          <p>Użytkownik: {{ survey.user_email }}</p>
+          <button @click="answerShow=true" class="answer__more">Pokaż odpowiedzi</button>
         </div>
         <div class="answer__header__time">
-          <p>Początek: {{ ankiet.startTime }}</p>
-          <p>Koniec: {{ ankiet.endTime }}</p>
+          <p>Początek: {{ survey.startTime }}</p>
+          <p>Koniec: {{ survey.endTime }}</p>
         </div>
       </div>
       <transition name="answers">
         <div v-if="answerShow" class="answer__answers">
-          <p>Odpowiedż 1: {{ ankiet.answer1 }}</p>
-          <p v-for="answer2 in ankiet.answer2" :key="answer2.id">Odpowiedż 2: {{ answer2 }}</p>
-          <p>Odpowiedż 3: {{ ankiet.answer3 }}</p>
-          <p>Odpowiedż 4: {{ ankiet.answer4 }}</p>
-          <p>Odpowiedż 5: {{ ankiet.answer5 }}</p>
-          <p>Odpowiedż 6: {{ ankiet.answer6 }}</p>
-          <p>Odpowiedż 7: {{ ankiet.answer7 }}</p>
+          <p>Odpowiedż 1: {{ survey.answer1 }}</p>
+          <p v-for="answer2 in survey.answer2" :key="answer2.id">Odpowiedż 2: {{ answer2 }}</p>
+          <p>Odpowiedż 3: {{ survey.answer3 }}</p>
+          <p>Odpowiedż 4: {{ survey.answer4 }}</p>
+          <p>Odpowiedż 5: {{ survey.answer5 }}</p>
+          <p>Odpowiedż 6: {{ survey.answer6 }}</p>
+          <p>Odpowiedż 7: {{ survey.answer7 }}</p>
         </div>
       </transition>
     </div>
@@ -40,17 +40,17 @@
       </thead>
 
       <tbody>
-        <tr v-for="ankiet in ankiety" :key="ankiet.id">
-          <td>{{ ankiet.answer1 }}</td>
-          <td>{{ ankiet.answer2 }}</td>
-          <td>{{ ankiet.answer3 }}</td>
-          <td>{{ ankiet.answer4 }}</td>
-          <td>{{ ankiet.answer5 }}</td>
-          <td>{{ ankiet.answer6 }}</td>
-          <td>{{ ankiet.answer7 }}</td>
-          <td>{{ ankiet.startTime }}</td>
-          <td>{{ ankiet.endTime }}</td>
-          <td>{{ ankiet.user_email }}</td>
+        <tr v-for="survey in surveys" :key="survey.id">
+          <td>{{ survey.answer1 }}</td>
+          <td>{{ survey.answer2 }}</td>
+          <td>{{ survey.answer3 }}</td>
+          <td>{{ survey.answer4 }}</td>
+          <td>{{ survey.answer5 }}</td>
+          <td>{{ survey.answer6 }}</td>
+          <td>{{ survey.answer7 }}</td>
+          <td>{{ survey.startTime }}</td>
+          <td>{{ survey.endTime }}</td>
+          <td>{{ survey.user_email }}</td>
         </tr>
       </tbody>
     </table>-->
@@ -62,16 +62,16 @@ import { db } from "../firebase";
 export default {
   data() {
     return {
-      ankiety: [],
+      surveys: [],
       answerShow: false
     };
   },
   created() {
-    db.collection("ankiet")
+    db.collection("survey")
       .get()
       .then(query => {
         query.forEach(colect => {
-          this.ankiety.push(colect.data());
+          this.surveys.push(colect.data());
         });
       });
   }
