@@ -1,4 +1,4 @@
-<template>
+  <template>
   <main id="startView">
     <div
       v-if="showPresentation"
