@@ -50,68 +50,77 @@
       <div class="main__users__elem" v-for="user in usersSDK" :key="user.index">
         <p>email: {{user.email}}</p>
         <p>UID: {{user.uid}}</p>
-        <p>Uzupełnione ankiety:</p>
-        <div style="color:green;" v-for="survey in surveys" :key="survey.index">
-          <div v-if="user.uid == survey.user">
-            <p>{{survey.survey}} Zostala wykonana o {{survey.endTime}}</p>
+        <div class="main__users__elem__complited">
+          <p>Uzupełnione ankiety:</p>
+          <div
+            style="color:green;"
+            v-if="user.uid == survey.user"
+            v-for="survey in surveys"
+            :key="survey.index"
+          >
+            <div v-if="user.uid == survey.user">
+              <p>{{survey.survey}} zostala wykonana o {{survey.endTime}}</p>
+            </div>
           </div>
         </div>
-        <p>Udostępnione ankiety:</p>
-        <div style="color:#053276;" v-for="userFB in usersFB" :key="userFB.index">
-          <p v-if="user.uid == userFB.user">{{userFB.survey}}</p>
-        </div>
-        <br>
-        <button
-          v-if="!(changeSurveys && user.uid==changeUserSurveys)"
-          @click="changeSurvey(user.uid)"
-          class="main__users__elem__button"
-        >Usunąc / udostępić ankietę</button>
-        <div
-          v-if="changeSurveys && user.uid==changeUserSurveys"
-          class="main__users__elem__change_survey"
-        >
-          <div class="main__elem__checkbox">
-            <label class="main__elem__checkbox-button" for="A">
-              A = Wersja Film
-              <input
-                type="checkbox"
-                id="A"
-                value="A"
-                v-model="newChangedUserSurveys"
-              >
-              <span class="checkmark-checkbox"></span>
-            </label>
-            <label class="main__elem__checkbox-button" for="B">
-              B = Wersja Foto
-              <input
-                type="checkbox"
-                id="B"
-                value="B"
-                v-model="newChangedUserSurveys"
-              >
-              <span class="checkmark-checkbox"></span>
-            </label>
-            <label class="main__elem__checkbox-button" for="C">
-              C = Wersja Ilustracja
-              <input
-                type="checkbox"
-                id="C"
-                value="C"
-                v-model="newChangedUserSurveys"
-              >
-              <span class="checkmark-checkbox"></span>
-            </label>
+        <div class="main__users__elem__avaible">
+          <p>Udostępnione ankiety:</p>
+          <div style="color:#053276;" v-for="userFB in usersFB" :key="userFB.index">
+            <p v-if="user.uid == userFB.user">{{userFB.survey}}</p>
           </div>
+          <br>
           <button
-            @click="saveChanges(changeUserSurveys)"
-            class="main__users__elem__change_survey__save"
-            style="background-color: green"
-          >Zapisz</button>
-          <button
-            @click="changeSurveys=false"
-            class="main__users__elem__change_survey__cancel"
-            style="background-color: red"
-          >Zamknij</button>
+            v-if="!(changeSurveys && user.uid==changeUserSurveys)"
+            @click="changeSurvey(user.uid)"
+            class="main__users__elem__button"
+          >Usunąc / udostępić ankietę</button>
+          <div
+            v-if="changeSurveys && user.uid==changeUserSurveys"
+            class="main__users__elem__change_survey"
+          >
+            <div class="main__elem__checkbox">
+              <label class="main__elem__checkbox-button" for="A">
+                A = Wersja Film
+                <input
+                  type="checkbox"
+                  id="A"
+                  value="A"
+                  v-model="newChangedUserSurveys"
+                >
+                <span class="checkmark-checkbox"></span>
+              </label>
+              <label class="main__elem__checkbox-button" for="B">
+                B = Wersja Foto
+                <input
+                  type="checkbox"
+                  id="B"
+                  value="B"
+                  v-model="newChangedUserSurveys"
+                >
+                <span class="checkmark-checkbox"></span>
+              </label>
+              <label class="main__elem__checkbox-button" for="C">
+                C = Wersja Ilustracja
+                <input
+                  type="checkbox"
+                  id="C"
+                  value="C"
+                  v-model="newChangedUserSurveys"
+                >
+                <span class="checkmark-checkbox"></span>
+              </label>
+            </div>
+            <button
+              @click="saveChanges(changeUserSurveys)"
+              class="main__users__elem__change_survey__save"
+              style="background-color: green"
+            >Zapisz</button>
+            <button
+              @click="changeSurveys=false"
+              class="main__users__elem__change_survey__cancel"
+              style="background-color: red"
+            >Zamknij</button>
+          </div>
         </div>
       </div>
     </div>
@@ -292,7 +301,6 @@ export default {
 
 <style scoped>
 main {
-  height: 80vh;
   width: 100%;
   overflow: auto;
   flex-direction: unset;
@@ -337,7 +345,7 @@ main {
   color: white;
 }
 .main__users {
-  width: 70%;
+  width: 90%;
   text-align: left;
 }
 .main__users p {
@@ -348,8 +356,15 @@ main {
   border: 1px #053276 solid;
   padding: 20px;
   margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 .main__elem__checkbox {
   width: 100%;
+}
+.main__users__elem__complited,
+.main__users__elem__avaible {
+  width: 47%;
 }
 </style>
