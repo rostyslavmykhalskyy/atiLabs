@@ -165,18 +165,18 @@
           v-if="survey4state <= 2"
           class="main__survey__content__h"
         >Proszę przeczytać stwierdzenia dotyczące zaprezentowanego w tej części badania materiału i wskazanie na ile zgadzasz lub nie zgadzasz się z poszczególnymi zdaniami:</h1>
-        <h1
+        <!-- <h1
           v-if="survey4state == 3"
           class="main__survey__content__h"
-        >Zaprezentowany materiał jest według mnie</h1>
+        >Zaprezentowany materiał jest według mnie</h1>-->
         <p
           v-if="survey4state <= 2"
           class="main__survey__content__p2"
         >(1 - zdecydowanie nie; 2 - raczej nie; 3 - nie wiem; 4- raczej tak; 5-zdecydowanie tak)</p>
-        <p
+        <!-- <p
           v-if="survey4state == 3"
           class="main__survey__content__p2"
-        >(1 - bardzo zły; 5 - bardzo dobry)</p>
+        >(1 - bardzo zły; 5 - bardzo dobry)</p>-->
         <div v-if="survey4state==1" class="main__survey__content4__block">
           <div class="main__survey__content4__block__elem">
             <p
@@ -296,7 +296,7 @@
               <span>Brak odpowiedzi</span>
             </div>
           </div>
-          <div class="main__survey__content4__block__elem">
+          <!-- <div class="main__survey__content4__block__elem">
             <p class="main__survey__content__p2">7. Materiał wywołał we mnie dyskomfort</p>
             <div class="main__elem__circle_buttons">
               <button
@@ -313,9 +313,9 @@
             >
               <span>Brak odpowiedzi</span>
             </div>
-          </div>
+          </div>-->
         </div>
-        <div v-if="survey4state==2" class="main__survey__content4__block">
+        <!-- <div v-if="survey4state==2" class="main__survey__content4__block">
           <div class="main__survey__content4__block__elem">
             <p class="main__survey__content__p2">8. Z zainteresowaniem obejrzałem/am materiał</p>
             <div class="main__elem__circle_buttons">
@@ -471,17 +471,17 @@
           <div class="main__contact__form__text-area">
             <textarea v-model="an16" placeholder="Maksymalnie 250 znaków"></textarea>
           </div>
-        </div>
-        <div class="main__survey__content3__block1__circle content4">
+        </div>-->
+        <!-- <div class="main__survey__content3__block1__circle content4">
           <div
             v-for="(n,index) in 3"
             :key="n.index"
             :class="{main__survey__content3__block1__circle__elem__viewed: index < survey4state}"
             class="main__survey__content3__block1__circle__elem content3__block2__circle__elem"
           ></div>
-        </div>
-        <button v-if="survey4state <= 2" @click="nextState4" class="main__survey__button">Dalej</button>
-        <button v-if="survey4state == 3" @click="nextState4" class="main__survey__button">Zakończ</button>
+        </div>-->
+        <!-- <button v-if="survey4state <= 2" @click="nextState4" class="main__survey__button">Dalej</button> -->
+        <button @click="nextState4" class="main__survey__button">Zakończ</button>
         <div v-if="showPopUpLastState" class="survay-save-success-background">
           <div class="survay-save-success success2">
             <img src="/ico-survey-success.png" alt />
@@ -907,35 +907,24 @@ export default {
         if (this.an15 == null) {
           this.checkAn = true;
         } else {
-          this.showPopUpLastState = true;
-          this.saveData();
-          setTimeout(() => {
-            if (this.saved) {
-              // this.$router.replace("/logined");
-            }
-          }, 1500);
         }
       }
       if (
-        ((this.an1 &&
+        (this.an1 &&
           this.an2 &&
           this.an3 &&
           this.an4 &&
           this.an5 &&
-          this.an6 &&
-          this.an7) != null &&
-          this.survey4state == 1) ||
-        ((this.an8 &&
-          this.an9 &&
-          this.an10 &&
-          this.an11 &&
-          this.an12 &&
-          this.an13 &&
-          this.an4) != null &&
-          this.survey4state == 2)
+          this.an6) != null
       ) {
         firstScrollTo("main");
-        this.survey4state++;
+        this.showPopUpLastState = true;
+        this.saveData();
+        setTimeout(() => {
+          if (this.saved) {
+            // this.$router.replace("/logined");
+          }
+        }, 1500);
         this.checkAn = false;
       } else {
         this.checkAn = true;
@@ -1949,8 +1938,6 @@ main {
       box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25);
       &:last-of-type {
         margin: 0;
-      }
-      &:hover {
       }
     }
   }
