@@ -28,36 +28,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// #header {
-//   position: absolute;
-//   z-index: 2;
-//   width: 86.62%;
-//   margin: 0 7.54% 1vh 4.04%;
-//   height: 4.4vh;
-//   padding-top: 5.3vh;
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-//   background: rgba(253, 253, 253, 0.01);
-// }
 #header {
   display: flex;
   width: 86.62%;
-  margin: 0 7.54% 1vh 4.04%;
+  margin: 0 7.54% 7.407407407407407vh 4.04%;
   height: 4.4vh;
   padding-top: 5.3vh;
-
-  // display: flex;
-  // align-items: center;
-  // justify-content: space-between;
-  // background: rgba(253, 253, 253, 0.01);
+  position: absolute;
+  top: 0;
 }
+main {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: block;
+  box-sizing: border-box;
+}
+
 @media (max-width: 1000px) {
   #header {
     width: 100%;
     margin: unset;
     height: 60px;
     padding-top: unset;
+    position: unset;
   }
 }
 main {

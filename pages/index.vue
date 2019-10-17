@@ -99,6 +99,7 @@ main {
 
 <script>
 export default {
+  
   methods: {
     login() {
       this.$router.replace("/login");

@@ -77,28 +77,23 @@
           Napisz do nas na
           <span class="text-bold">badania@atilabs.pl</span> lub wypełnij poniższy formularz:
         </p>
-        <input type="email" class="main__contact__form__input" placeholder="Adres e-mail" />
-        <!-- <input type="text" class="main__contact__form__input" placeholder="Rok urodzenia"> -->
-        <!-- <p
-        class="main__contact__form__p"
-      >Czy Ty lub ktokolwiek z Twoich bliskich cierpi/-ał na depresję?</p>
-
-      <div class="main__elem__radio">
-        <label class="main__elem__radio-button">
-          Tak
-          <input type="radio" id="one" value="Tak" v-model="answer">
-          <span class="checkmark"></span>
-        </label>
-        <label class="main__elem__radio-button">
-          Nie
-          <input type="radio" id="two" value="Nie" v-model="answer">
-          <span class="checkmark"></span>
-        </label>
-        </div>-->
+        <input
+          type="email"
+          v-model="email"
+          :class="{errorEmail:email==null}"
+          class="main__contact__form__input"
+          placeholder="Adres e-mail"
+        />
         <div class="main__contact__form__text-area">
-          <textarea placeholder="Wiadomość (max. 200 znaków)"></textarea>
+          <textarea v-model="message" maxlength="200" placeholder="Wiadomość (max. 200 znaków)"></textarea>
         </div>
-        <button class="main__form__button blue-button">Wyślij</button>
+        <transition name="blur" mode="out-in">
+          <p
+            v-if="sentInfo && ((this.email || this.message) == '')"
+            class="main__contact__form__info"
+          >Wiadomość została wysłana</p>
+        </transition>
+        <button @click="sendMessage" class="main__form__button blue-button">Wyślij</button>
       </div>
     </div>
     <div class="main__contact__info">
@@ -167,39 +162,57 @@
         Napisz do nas na
         <span class="text-bold">badania@atilabs.pl</span> lub wypełnij poniższy formularz:
       </p>
-      <input type="email" class="main__contact__form__input" placeholder="Adres e-mail" />
-      <!-- <input type="text" class="main__contact__form__input" placeholder="Rok urodzenia"> -->
-      <!-- <p
-        class="main__contact__form__p"
-      >Czy Ty lub ktokolwiek z Twoich bliskich cierpi/-ał na depresję?</p>
-
-      <div class="main__elem__radio">
-        <label class="main__elem__radio-button">
-          Tak
-          <input type="radio" id="one" value="Tak" v-model="answer">
-          <span class="checkmark"></span>
-        </label>
-        <label class="main__elem__radio-button">
-          Nie
-          <input type="radio" id="two" value="Nie" v-model="answer">
-          <span class="checkmark"></span>
-        </label>
-      </div>-->
+      <input
+        type="email"
+        class="main__contact__form__input"
+        placeholder="Adres e-mail"
+        v-model="email"
+        :class="{errorEmail:email==null}"
+      />
       <div class="main__contact__form__text-area">
-        <textarea placeholder="Wiadomość (max. 200 znaków)"></textarea>
+        <textarea v-model="message" maxlength="200" placeholder="Wiadomość (max. 200 znaków)"></textarea>
       </div>
-      <button class="main__form__button blue-button">Wyślij</button>
+      <transition name="blur" mode="out-in">
+        <p
+          v-if="sentInfo && ((this.email || this.message) == '')"
+          class="main__contact__form__info"
+        >Wiadomość została wysłana</p>
+      </transition>
+      <button @click="sendMessage" class="main__form__button blue-button">Wyślij</button>
     </div>
   </main>
 </template>
 
 <script>
+import { db } from "../assets/firebase";
 export default {
   data() {
     return {
       contactState: 0,
-      answer: null
+      answer: null,
+      email: "",
+      message: "",
+      sentInfo: false
     };
+  },
+  methods: {
+    sendMessage() {
+      if (this.validEmail(this.email)) {
+        db.collection("message")
+          .add({
+            email: this.email,
+            message: this.message,
+            read: 1
+          })
+          .then((this.email = ""), (this.message = ""), (this.sentInfo = true));
+      } else {
+        this.email = null;
+      }
+    },
+    validEmail(email) {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    }
   }
 };
 </script>
@@ -253,5 +266,16 @@ p {
 }
 .text-bold {
   font-family: "Montserrat-bold";
+}
+.errorEmail {
+  border-color: #ff00006b;
+  outline: none;
+}
+input,
+textarea {
+  outline: none;
+}
+.main__contact__form__info {
+  position: absolute;
 }
 </style>

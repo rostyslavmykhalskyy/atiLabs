@@ -1,6 +1,11 @@
 <template>
   <div :class="dynamicBG" class="mobileBG">
-    <headerTop @logined="onLogin" @clickHome="update++" />
+    <headerTop
+      @logined="onLogin"
+      @clickHome="update++"
+      @showMobileMenu="mobileMenu=true"
+      @hideMobileMenu="mobileMenu=false"
+    />
     <transition name="blur" mode="out-in">
       <nuxt :key="update" />
     </transition>
@@ -424,7 +429,7 @@ html {
       min-height: 91vh;
     }
     .main__logined__surveys {
-      padding: 2.998500749625187vh 0 9.745127436281859vh;
+      padding: 2.998500749625187vh 0 14.745127436281859vh;
     }
     .main__logined__surveys__elem {
       width: 91.46666666666667%;
@@ -614,6 +619,9 @@ html {
   background-repeat: no-repeat;
   background-size: 52.70520833333333% 100vh;
 }
+.mobileMenu {
+  position: fixed;
+}
 .indexBG {
   background-image: url("/bg_top.png");
   background-position: left top;
@@ -625,8 +633,9 @@ html {
     url("/bg_bottom2.png");
   background-position: left top, left 15vh, right bottom;
   background-repeat: no-repeat, no-repeat, no-repeat;
-  background-size: 45.9375% 24.53703703703704vh, 33.125% 98.7037037037037%,
-    50.52083333333333% 78.14814814814815%;
+  // background-size: 45.9375% 24.53703703703704vh, 33.125% 98.7037037037037%,
+  //   50.52083333333333% 78.14814814814815%;
+  background-size: 45.9375% 24.53703703703704vh, auto, auto;
 }
 .blur-enter-active,
 .blur-leave-active {
@@ -686,6 +695,19 @@ html {
 }
 .rotate-leave-to {
   transform: rotateX(75deg);
+}
+
+.fadeAnswers-enter-active,
+.fadeAnswers-leave-active {
+  transition: all 1s;
+}
+.fadeAnswers-enter,
+.fadeAnswers-leave-to {
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top;
+  margin: 0 !important;
+  height: 0;
 }
 
 body {
@@ -963,9 +985,6 @@ main {
   color: #1a1b1e;
 }
 
-main p {
-  margin-top: 2.314814814814815vh;
-}
 .main__p {
   font: 1rem/1.875 "Montserrat", century gothic, sans-serif;
   text-align: center;
@@ -1235,11 +1254,13 @@ main p {
 .main__logined__surveys__elem {
   width: 31.226%;
   margin: 0 3.013% 3.703703703703704vh 0;
+  padding: 20px;
   background: #ffffff;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.12);
   border-radius: 20px;
   text-align: center;
   cursor: pointer;
+  box-sizing: border-box;
   img {
     height: 6.018518518518519vh;
     display: block;
@@ -1251,6 +1272,9 @@ main p {
     font-weight: 600;
     font: 1.125rem "Montserrat-bold", century gothic, sans-serif;
   }
+}
+.main__logined__surveys__elem__done {
+  cursor: not-allowed;
 }
 ///Logined End
 ////Main Survey Start
@@ -1804,7 +1828,8 @@ export default {
     return {
       user: "",
       update: 0,
-      path: ""
+      path: "",
+      mobileMenu: false
     };
   },
   methods: {
@@ -1814,6 +1839,11 @@ export default {
   },
   computed: {
     dynamicBG() {
+      if (this.mobileMenu) {
+        return {
+          mobileMenu: true
+        };
+      }
       if ($nuxt.$route.path == "/login") {
         return {
           loginBG: true

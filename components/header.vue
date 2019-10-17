@@ -1,5 +1,5 @@
 <template>
-  <header id="header">
+  <header id="header" @click="showMenuEmiterOff">
     <div class="header__imgs">
       <div class="header__img">
         <img @click="answers" src="/logoATIlabs.png" />
@@ -64,14 +64,14 @@
     </div>
     <div class="header__form-mobile">
       <transition name="rotate" mode="out-in">
-        <div v-if="!logined" key="signin" class="header__signin">
+        <div @click="showMenuEmiter" v-if="!logined" key="signin" class="header__signin">
           <!-- <input type="email" v-model="email" class="header__input" placeholder="e-mail">
           <input type="password" v-model="password" class="header__input" placeholder="hasło">
           <button class="button__form__submit" :disabled="!password" @click="signin">Zaloguj</button>-->
           <button v-if="showMenu==0" @click="showMenu = !showMenu" class="header__form__nav-button"></button>
           <button v-else @click="showMenu = !showMenu" class="header__form__nav-button-cancel"></button>
         </div>
-        <div v-if="logined" key="logined" class="header__logined">
+        <div @click="showMenuEmiter" v-if="logined" key="logined" class="header__logined">
           <img @click="loginedUserMenuShow = !loginedUserMenuShow" src="/ico-menu-logined.png" alt />
         </div>
       </transition>
@@ -102,7 +102,11 @@
         <p>Kontakt</p>
       </nuxt-link>
     </nav>
-    <div v-if="loginedUserMenuShow" class="header__logined-mobile">
+    <div
+      v-if="loginedUserMenuShow"
+      @click="loginedUserMenuShow = !loginedUserMenuShow"
+      class="header__logined-mobile"
+    >
       <p>Zalogowany jako:</p>
       <p>{{email}}</p>
       <button @click="logout">Wyloguj się</button>
@@ -129,13 +133,12 @@ export default {
     signin() {
       this.loading = true;
       this.succssesfuly = null;
-
       fb.auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(() => {
           this.succssesfuly = 1;
           this.loading = false;
-          this.$router.replace("/logined");
+          this.$router.push("/logined");
         })
         .catch(error => {
           this.loading = false;
@@ -155,6 +158,7 @@ export default {
         .catch(error => {});
     },
     answers() {
+      this.showMenu = false;
       if (this.logined) {
         if (this.$router.currentRoute.path == "/logined") {
           this.$emit("clickHome");
@@ -163,6 +167,15 @@ export default {
         }
       } else {
         this.$router.replace("/");
+      }
+    },
+    showMenuEmiter() {
+      console.log("tex4st");
+      this.$emit("showMobileMenu");
+    },
+    showMenuEmiterOff() {
+      if (!this.showMenu && !this.loginedUserMenuShow) {
+        this.$emit("hideMobileMenu");
       }
     }
   },

@@ -52,6 +52,7 @@
 import { fb } from "../assets/firebase";
 import { error } from "util";
 export default {
+  
   data() {
     return {
       email: null,

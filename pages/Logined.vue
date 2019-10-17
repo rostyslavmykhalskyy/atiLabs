@@ -36,70 +36,40 @@
         <p>Wszystkie</p>
       </div>
     </div>
+    <div class="main__logined__surveys">
+      <div
+        v-for="survey in info.doneName"
+        :key="survey.id"
+        class="main__logined__surveys__elem main__logined__surveys__elem__done"
+        v-if="state == 1 || state== null"
+      >
+        <img src="/ico-done-big.png" alt />
+        <p>{{survey.surveyName}}</p>
+      </div>
 
-    <div v-if="state == 1 || state== null" class="main__logined__surveys">
-      <!-- <div v-if="info.done.a" class="main__logined__surveys__elem">
-        <img src="/ico-done-big.png" alt />
-        <p>Wersja Film</p>
-      </div>
-      <div v-if="info.done.b" class="main__logined__surveys__elem">
-        <img src="/ico-done-big.png" alt />
-        <p>Wersja Fotoe</p>
-      </div>
-      <div v-if="info.done.c" class="main__logined__surveys__elem">
-        <img src="/ico-done-big.png" alt />
-        <p>Wersja Ilustracj</p>
-      </div>-->
-    </div>
-    <div v-if="state == 2 || state==null" class="main__logined__surveys">
-      <div @click="goToSurvey(surveyD)" class="main__logined__surveys__elem">
-        <!-- <img src="/ico-unaccessible-big.png" alt /> -->
+      <div
+        v-if="(state == 2 || state==null) && info.unavailableName[0]"
+        @click="goToSurvey(info.unavailable[0])"
+        class="main__logined__surveys__elem"
+      >
         <img src="/ico-actual-big.png" alt />
-        <p>Fakty i interpretacje</p>
+        <p>{{info.unavailableName[0]}}</p>
       </div>
-      <!-- <div @click="goToSurvey(surveyE)" class="main__logined__surveys__elem">
-        <img src="/ico-actual-big.png" alt />
-        <p>Zniekształcenia poznawcze</p>
+      <div v-if="!info.unavailableName[0] && state == 2" class="main__logined__surveys__elem">
+        <img src="/ico-unaccessible-big.png" alt />
+        <p>Nie ma aktualnych ankiet</p>
       </div>
-      <div @click="goToSurvey(surveyF)" class="main__logined__surveys__elem">
-        <img src="/ico-actual-big.png" alt />
-        <p>Objawy depresji (umiarkowane objawy)</p>
-      </div>
-      <div @click="goToSurvey(surveyFL)" class="main__logined__surveys__elem">
-        <img src="/ico-actual-big.png" alt />
-        <p>Objawy depresji (niski poziom)</p>
-      </div>
-      <div @click="goToSurvey(surveyFH)" class="main__logined__surveys__elem">
-        <img src="/ico-actual-big.png" alt />
-        <p>Objawy depresji (wysoki poziom)</p>
-      </div>
-      <div @click="goToSurvey(surveyG)" class="main__logined__surveys__elem">
-        <img src="/ico-actual-big.png" alt />
-        <p>Model ABC</p>
-      </div>
-      <div @click="goToSurvey(surveyH)" class="main__logined__surveys__elem">
-        <img src="/ico-actual-big.png" alt />
-        <p>Ustalanie celów</p>
-      </div>
-      <div @click="goToSurvey(surveyI)" class="main__logined__surveys__elem">
-        <img src="/ico-actual-big.png" alt />
-        <p>Regulacja emocji</p>
-      </div>-->
 
-      <!-- <div v-if="surveyA" @click="goToSurvey(surveyA)" class="main__logined__surveys__elem">
-        <img src="/ico-actual-big.png" alt />
-        <p>Wersja Film</p>
+      <div
+        v-for="(survey, index) in info.unavailableName"
+        v-if="index!=0 && state == 3 || state==null"
+        :key="survey.id"
+        class="main__logined__surveys__elem main__logined__surveys__elem__done"
+      >
+        <img src="/ico-unaccessible-big.png" alt />
+        <p>{{survey}}</p>
       </div>
-      <div v-if="surveyB" @click="goToSurvey(surveyB)" class="main__logined__surveys__elem">
-        <img src="/ico-actual-big.png" alt />
-        <p>Wersja Foto</p>
-      </div>
-      <div v-if="surveyC" @click="goToSurvey(surveyC)" class="main__logined__surveys__elem">
-        <img src="/ico-actual-big.png" alt />
-        <p>Wersja Ilustracj</p>
-      </div>-->
     </div>
-    <div v-if="state == 3 || state==null" class="main__logined__surveys"></div>
   </main>
 </template>
 
@@ -110,32 +80,13 @@ export default {
     return {
       state: 2,
       version: null,
-      surveyA: null,
-      surveyB: null,
-      surveyC: null,
-      surveyD: "surveyD",
-      surveyE: "surveyE",
-      surveyF: "surveyF",
-      surveyFL: "surveyFL",
-      surveyFH: "surveyFH",
-      surveyG: "surveyG",
-      surveyH: "surveyH",
-      surveyI: "surveyI",
-      textThought: {
-        text1: "Poradzę sobie z tą sytuacją i osiągnę swój cel.",
-        text2: "Tracę coś, co było dla mnie ważne.",
-        text3: "Coś mi zagraża!",
-        text4: "To moja wina, że nie uda mi się osiągnąć celu."
-      },
-      textThoughtClicked: "",
       loginedUser: null,
       info: {
         survey: null,
-        done: {
-          a: "",
-          b: "",
-          c: ""
-        }
+        done: [],
+        doneName: [],
+        unavailable: [],
+        unavailableName: []
       },
       survey: null
     };
@@ -145,61 +96,21 @@ export default {
       this.textThoughtClicked = index;
     },
     goToSurvey(surveyLink) {
-      if (this.survey) {
-        this.$router.replace(this.survey);
-      }
       if (surveyLink) {
-        this.$router.replace(surveyLink);
+        this.$router.push("survey" + surveyLink);
       }
     }
   },
-  // computed: {
-  //   msg() {
-  //     if (this.survey) {
-  //       this.info.survey = true;
-  //       return "Mamy dla Ciebie pierwsze badanie. Przewidywany czas realizacji: 5 minut. Proponowane wynagrodzenie: 30 złotych brutto. Ankieta dostępna do 26 lutego 2019 do północy. Naciśnij przycisk “Start”, aby rozpocząć badanie.";
-  //     } else {
-  //       this.info.survey = false;
-  //       return "Nie masz żadnej ankiety do wypełnienia";
-  //     }
-  //   }
-  // },
   created() {
-    var a;
-    var b;
-    var c;
-    fb.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.loginedUser = fb.auth().currentUser.email;
-      } else {
-        this.logined = false;
-      }
-    });
-
     db.collection("survey")
       .get()
       .then(query => {
         query.forEach(user => {
           if (user.data().user === fb.auth().currentUser.uid) {
             if (user.data().survey) {
-              if (user.data().survey === "A") {
-                a = user.data().survey;
-                this.info.done.a = user.data().survey;
-                console.log(user.data().survey);
-              }
-              if (user.data().survey === "B") {
-                b = user.data().survey;
-                this.info.done.b = user.data().survey;
-                console.log(user.data().survey);
-              }
-              if (user.data().survey === "C") {
-                c = user.data().survey;
-                this.info.done.b = user.data().survey;
-                console.log(user.data().survey);
-              }
+              this.info.done.push(user.data().survey);
+              this.info.doneName.push(user.data());
             }
-          } else {
-            // this.info.done = false;
           }
         });
       });
@@ -207,31 +118,85 @@ export default {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          if (doc.data().user === fb.auth().currentUser.uid) {
-            if (doc.data().survey == "A") {
-              if (doc.data().survey != a) {
-                this.survey = "/surveya";
-                this.surveyA = "/surveya";
-                this.info.survey = true;
-              }
-            } else if (doc.data().survey == "B") {
-              if (doc.data().survey != b) {
-                this.survey = "/surveyb";
-                this.surveyB = "/surveyb";
-                this.info.survey = true;
-              }
-            } else if (doc.data().survey == "C") {
-              if (doc.data().survey != c) {
-                this.survey = "/surveyc";
-                this.surveyC = "/surveyc";
-                this.info.survey = true;
-              }
-            }
+          if (
+            doc.data().user === fb.auth().currentUser.uid &&
+            !this.info.done.includes(doc.data().survey)
+          ) {
+            this.info.unavailable.push(doc.data().survey);
+            this.info.unavailableName.push(doc.data().surveyName);
           } else {
             this.info.survey = false;
           }
         });
       });
+
+    //   var a;
+    //   var b;
+    //   var c;
+    //   fb.auth().onAuthStateChanged(user => {
+    //     if (user) {
+    //       this.loginedUser = fb.auth().currentUser.email;
+    //     } else {
+    //       this.logined = false;
+    //     }
+    //   });
+    //   db.collection("survey")
+    //     .get()
+    //     .then(query => {
+    //       query.forEach(user => {
+    //         if (user.data().user === fb.auth().currentUser.uid) {
+    //           if (user.data().survey) {
+    //             if (user.data().survey === "G") {
+    //               console.log("test");
+    //               a = user.data().survey;
+    //               this.info.done.a = user.data().survey;
+    //               console.log(user.data().survey);
+    //             }
+    //             if (user.data().survey === "B") {
+    //               b = user.data().survey;
+    //               this.info.done.b = user.data().survey;
+    //               console.log(user.data().survey);
+    //             }
+    //             if (user.data().survey === "C") {
+    //               c = user.data().survey;
+    //               this.info.done.b = user.data().survey;
+    //               console.log(user.data().survey);
+    //             }
+    //           }
+    //         } else {
+    //           // this.info.done = false;
+    //         }
+    //       });
+    //     });
+    //   db.collection("user")
+    //     .get()
+    //     .then(querySnapshot => {
+    //       querySnapshot.forEach(doc => {
+    //         if (doc.data().user === fb.auth().currentUser.uid) {
+    //           if (doc.data().survey == "A") {
+    //             if (doc.data().survey != a) {
+    //               this.survey = "/surveya";
+    //               this.surveyA = "/surveya";
+    //               this.info.survey = true;
+    //             }
+    //           } else if (doc.data().survey == "B") {
+    //             if (doc.data().survey != b) {
+    //               this.survey = "/surveyb";
+    //               this.surveyB = "/surveyb";
+    //               this.info.survey = true;
+    //             }
+    //           } else if (doc.data().survey == "C") {
+    //             if (doc.data().survey != c) {
+    //               this.survey = "/surveyc";
+    //               this.surveyC = "/surveyc";
+    //               this.info.survey = true;
+    //             }
+    //           }
+    //         } else {
+    //           this.info.survey = false;
+    //         }
+    //       });
+    //     });
   }
 };
 
